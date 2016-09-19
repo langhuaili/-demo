@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body,html,img,div{
+            padding: 0;
+            margin:0;
+        }
+        body,html{
+            background: #cccccc;
+            height: 100%;
+            display: table;
+            width: 100%;
+        }
+        img{
+            width: 50px;
+            padding: 0;
+            height: 500px;
+            float: left;
+        }
+        .wrap{
+            width: 500px;
+            height: 500px;
+            margin: 100px auto;
+        }
+        .circleWrap{
+            position: relative;
+        }
+        .circle{
+            position: relative;
+        }
+        .circle .back{
+            opacity: 0.5;
+        }
+        .circle .front{
+            opacity: 0.8;
+            position: absolute;
+            left: 0;
+            top:58px;
+        }
+        .circle .back img.b_l{
+            width: 50px;
+            transform: skew(0deg,-49deg)
+           }
+        .circle .back img.b-m{
+            width: 400px;
+            margin-top: -30px;
+        }
+        .circle .back img.b-r{
+            width: 50px;
+            transform: skew(0deg,49deg)
+        }
+        .circle .front img.f_l{
+            width: 50px;
+            transform: skew(0deg,49deg)
+        }
+        .circle .front img.f_m{
+            width: 400px;
+            margin-top: 30px;
+        }
+        .circle .front  img.f_r{
+            width: 50px;
+            transform: skew(0deg,-49deg)
+        }
+        .dy{
+            position: absolute;
+            top:557px;
+            opacity: 0.2;
+        }
+         .dy img{
+            height: 200px;
+
+        }
+         .dy img.f_l{
+
+            width: 50px;
+            transform:rotateY(180deg) rotate(180deg) skew(0deg,-49deg);
+        }
+       .dy img.f_m{
+            width: 400px;
+            margin-top: 30px;
+            transform: rotateY(180deg)rotate(180deg);
+        }
+       .dy  img.f_r{
+            width: 50px;
+            transform: rotateY(180deg)rotate(180deg) skew(0deg,49deg);
+        }
+
+    </style>
+    <script>
+        window.onload=function () {
+            var  circle=document.getElementsByClassName('circle')[0];
+            var imgs= circle.getElementsByTagName('img');
+            var dy=document.getElementsByClassName('dy')[0];
+            var dyImg=dy.getElementsByTagName('img');
+            for(i=0;i<imgs.length;i++) {
+                var clockGo = false;
+                var timer = null;
+
+                    imgs[i].onmouseover = function () {
+                        console.log('99');
+                        if (!clockGo) {
+                            clockGo = true;
+                            timer = setInterval(function () {
+                                goAhead(imgs,dyImg);
+                            }, 2000);
+                        }
+                    }
+                    imgs[i].onmouseout = function () {
+                        clearInterval(timer);
+                        clockGo = false;
+                    }
+
+                }
+        }
+        function goAhead(imgs,dyImg){
+            //  获取一遍图片地址；
+            var source=[];
+            for(j=0;j<imgs.length;j++){
+                source.push(imgs[j].getAttribute('src'));
+            }
+            //设置图片地址
+            imgs[0].src=source.pop();
+            for(var j=1;j<imgs.length;j++){
+                imgs[j].src=source[j-1];
+            }
+            //设置倒映
+            for(var k=0;k<dyImg.length;k++){
+                dyImg[k].src=imgs[k+3].src;
+            }
+
+        }
+
+    </script>
+</head>
+<body>
+<div class="wrap">
+    <div class="circleWrap">
+         <div class="circle">
+             <div class="back">
+                 <img class="b_l" src="img/1.jpg" alt="">
+                 <img class="b-m" src="img/2.jpg" alt="">
+                 <img class="b-r" src="img/3.jpg" alt="">
+             </div>
+            <div class="front">
+                <img class="f_l" src="img/4.jpg" alt="">
+                <img class="f_m" src="img/5.jpg" alt="">
+                <img class="f_r" src="img/6.jpg" alt="">
+            </div>
+         </div>
+         <div class="dy">
+             <img class="f_l" src="img/4.jpg" alt="">
+             <img class="f_m" src="img/5.jpg" alt="">
+             <img class="f_r" src="img/6.jpg" alt="">
+         </div>
+    </div>
+ </div>
+</div>
+
+
+</body>
+</html>
